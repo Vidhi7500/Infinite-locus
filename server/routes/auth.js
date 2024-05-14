@@ -8,27 +8,30 @@ const SECRET_ACCESS_TOKEN = "somsung"
 
 router.post('/signup', async (req, res) => {
 
-    try {
-        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
-        if (existingUser) {
-            return res.status(400).json({ message: '❌ Username or email already exists.' });
-        }
+    // try {
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        const newUser = new User({
-            username: username,
-            email: email,
-            password: hashedPassword,
-        });
-
-        const user = await newUser.save();
-        res.status(200).json({ message: '✅ User created successfully.', User: user });
+    console.log(req.body);
+    const username = req.body.username;
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+        return res.status(400).json({ message: '❌ Username or email already exists.' });
     }
-    catch (err) {
-        res.status(500).json({ "errors": err.errors });
-    }
+
+    const password = req.body.password;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = new User({
+        username: username,
+        password: hashedPassword,
+    });
+
+    const user = await newUser.save();
+    res.status(200).json({ message: '✅ User created successfully.', User: user });
+    // }
+    // catch (err) {
+    //     res.status(500).json({ "errors": err.errors });
+    // }
 });
 
 router.post('/signin', async (req, res) => {
