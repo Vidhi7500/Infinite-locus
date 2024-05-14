@@ -1,11 +1,12 @@
-import ProductPage from "./Components/ProductPage"
+import ProductPage from "./Components/ProductPage";
+import Authentication from "./Components/Authentication";
 
 
 function App() {
 
   return (
     <>
-      <ProductPage></ProductPage>
+      <Authentication></Authentication>
     </>
   )
 }
