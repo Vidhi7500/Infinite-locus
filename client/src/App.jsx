@@ -1,10 +1,11 @@
+import ProductPage from "./Components/ProductPage"
 
 
 function App() {
 
   return (
     <>
-      Hello world!
+      <ProductPage></ProductPage>
     </>
   )
 }
